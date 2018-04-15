@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Candidați
+{% endblock %}
+
+{% block content %}
+    <div>
+    {% for c in object_list %}
+        <div class="d-inline-flex p-2 mr-4 mt-4 card" style="width: 18rem;">
+          <img class="card-img-top" src="{{ c.photo.url }}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{ c.name }}</h5>
+            <p class="card-text">{{ c.motivation | truncatewords:20 }}</p>
+            <a href="{% url "questions:candidate_detail" pk=c.id %}" class="btn btn-primary">Răspunsurile candidatului <span class="badge badge-light">{{ c.candidateanswer_set.count }}</span></a>
+          </div>
+        </div>
+
+    {% endfor %}
+    </div>
+    <div style="height: 20px"></div>
+
+{% endblock %}

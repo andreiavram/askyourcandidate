@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ object }}</h1>
+        <p class="lead">
+            <img src="{{ object.photo.url }}" alt="{{ object.name }}" class="float-left mr-3 img-thumbnail">
+            <strong>Motivație</strong>: {{ object.motivation }}
+
+        </p>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{ object.pdf_link }}" role="button">Formularul de candidatură</a>
+        </p>
+    </div>
+
+    <ul class = "list-group">
+    {% for q, a in qa.iteritems %}
+        <li class = "list-group-item">
+        <h2>{{ q.text }}</h2>
+        {% if q.owner_name and q.owner_affiliation %}
+            <p>întrebare de la {{ q.owner_name }}, {{ q.owner_affiliation }}</p>
+        {% endif %}
+
+        {% if user.is_authenticated and user.candidate %}
+            <a class="btn btn-sm btn-outline-secondary" href = "{% url "questions:question_answer" pk=q.id %}">Răspunde / editează răspunsul</a><br>
+        {% endif %}
+        <small style="color: gray">Ultima actualizare la {{ a.timestamp | date:"d.m.Y H:i" }}</small>
+        <p>
+            {% if a %}
+                <pre>{{ a.text }}</pre>
+
+            {% else %}
+                <div class="alert alert-danger" role="alert">
+                    Candidatul nu a răspuns la această întrebare.
+                </div>
+            {% endif %}
+        </p>
+        <a class="btn btn-sm btn-outline-secondary" href = "{% url "questions:question_detail" pk=q.id %}">Toate răspunsurile acestei întrebări</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load icons %}
+
+{% block title %}
+    Întrebarea ta
+{% endblock %}
+
+{% block content %}
+    <p class = "lead">Dacă ești membru ONCR, poți să-ți folosești codul de membru pentru a propune o întrebare pentru candidați. Verifică înainte să scrii, să nu fi pus altcineva întrebarea. Toate întrebările trec printr-un proces de aprobare manuală, deci întrebarea ta nu va apărea imediat pe site. Întrebarea ta trebuie să se adreseze în egală măsură tuturor candidaților.</p>
+    <form action="" method="post" class="form">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            {% icon 'star' %} Trimite
+        </button>
+      {% endbuttons %}
+    </form>
+{% endblock %}

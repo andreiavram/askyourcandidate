@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if list_type == 1 %}
+    Întrebări <span class="badge badge-success">{{ approved_count }}</span>
+    {% else %}
+        {% if list_type == 0 %}
+            Întrebări în așteptare <span class="badge badge-warning">{{ pending_count }}</span>
+        {% else %}
+            {% if list_type == 2 %}
+                Întrebări respinse <span class="badge badge-danger">{{ rejected_count }}</span>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    {% if list_type == 1 %}
+    <p class = "lead">Mai jos sunt întrebările care au fost aprobate și la care candidații pot să răspundă. Orice membru ONCR poate <a href = "{% url "questions:question_ask" %}">adresa</a> o întrebare, atâta vreme cât ea este destinată tuturor candidaților, nu este inclusă într-o altă întrebare deja acceptată, și are relevanță pentru crearea profilului candidatului.</p>
+    <p>Puteți găsi aici și întrebările care <a href = "{% url "questions:index" %}?list_type=0">așteaptă aprobare</a> <span class="badge badge-warning">{{ pending_count }}</span>, și cele care <a href = "{% url "questions:index" %}?list_type=2">au fost respinse</a> <span class="badge badge-danger">{{ rejected_count }}</span>.</p>
+    {% else %}
+        <p class = "lead">Puteți să vă întoarceți <a href = "{% url "questions:index" %}?list_type=1">aici</a> la lista cu întrebările aprobate.</p>
+    {% endif %}
+
+    {% for q in object_list %}
+        <h2>{{ q }}</h2>
+        <p>
+        {% if q.owner_name and q.owner_affiliation %}
+            de la {{ q.owner_name }}, {{ q.owner_affiliation }}
+        {% endif %}
+        </p>
+        {%  if list_type == 1 %}
+            <p>
+                <a class = "btn btn-sm btn-outline-secondary" href = "{% url "questions:question_detail" pk=q.id %}">Vezi răspunsuri <span class="badge badge-light">{{ q.candidateanswer_set.count }}</span></a>
+            </p>
+        {% else %}
+            {% if list_type == 2 %}
+                <div class="alert alert-danger" role="alert">
+                    <strong>Intrebarea a fost respinsa</strong>: {{ q.rejection_reason }}
+                </div>
+            {% endif%}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

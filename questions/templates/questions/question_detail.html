@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ object }}
+{% endblock %}
+
+{% block content %}
+    {% if object.owner_name %}
+        <p class = "lead">de la {{ object.owner_name }}, {{ object.owner_affiliation }}</p>
+    {% endif %}
+
+<ul class="list-group">
+    {% for c, a in qa.iteritems %}
+        <li class="list-group-item">
+        <h2>{{ c.name }}</h2>
+        {% if user.is_authenticated and user.candidate == c %}
+            <a class="btn btn-sm btn-outline-secondary" href = "{% url "questions:question_answer" pk=object.id %}">Răspunde / editează răspunsul</a><br>
+        {% endif %}
+            <small style="color: gray">Ultima actualizare la {{ a.timestamp | date:"d.m.Y H:i" }}</small>
+        <p>
+        {% if a %}
+            <pre>{{ a.text }}</pre>
+            <a class="btn btn-sm btn-outline-secondary" href = "{% url "questions:candidate_detail" pk=c.id %}">Toate răspunsurile candidatului</a>
+        {% else %}
+
+            <div class="alert alert-danger" role="alert">
+              Candidatul nu a răspuns la această întrebare.
+            </div>
+        {% endif %}
+        </p>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
