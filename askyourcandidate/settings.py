@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'bootstrap4',
     'django_icons',
+    'captcha',
 
     'questions',
 ]
@@ -134,6 +135,10 @@ LOGIN_URL = '/login'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR
+
+RECAPTCHA_PUBLIC_KEY = ""
+RECAPTCHA_PRIVATE_KEY = ""
+NOCAPTCHA = True
 
 try:
     from local_settings import *

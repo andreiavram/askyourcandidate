@@ -37,7 +37,9 @@
           <ul class="navbar-nav mt-2 mt-md-0">
               {% if request.user.is_authenticated %}
                     <li><a class = "nav-item nav-link" href = "{% url "questions:candidate_redirect" %}">{{ user.candidate.name }}</a></li>
+                    <li><a class = "nav-item nav-link" href = "{% url "change_password" %}">Schimbă parola</a></li>
                     <li><a class = "nav-item nav-link" href = "{% url "logout" %}">Logout</a></li>
+
               {% else %}
                     <li><a class = "nav-item nav-link" href = "{% url "login" %}">Login</a></li>
               {% endif %}

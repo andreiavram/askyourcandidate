@@ -1,3 +1,4 @@
+from captcha.fields import ReCaptchaField
 from django.forms import ModelForm, CharField, Textarea
 
 from questions.models import CandidateAnswer, Question
@@ -9,7 +10,7 @@ class QuestionForm(ModelForm):
         model = Question
 
     text = CharField(required=True, widget=Textarea, label="Intrebarea")
-
+    captcha = ReCaptchaField()
 
 class CandidateAnswerForm(ModelForm):
     class Meta:

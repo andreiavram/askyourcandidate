@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -40,6 +41,10 @@ class Candidate(models.Model):
 
     photo = models.ImageField(upload_to="img")
     user = models.OneToOneField(User)
+    order = models.IntegerField(default=1)
+
+    class Meta:
+        ordering = ["order", ]
 
     def __unicode__(self):
         return self.name
