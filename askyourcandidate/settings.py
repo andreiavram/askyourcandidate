@@ -134,3 +134,8 @@ LOGIN_URL = '/login'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
