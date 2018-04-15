@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.http import HttpResponseRedirect, Http404, HttpResponseForbidden
+from django.http import HttpResponseRedirect, Http404
 # Create your views here.
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, RedirectView, TemplateView
 
 from questions.forms import QuestionForm, CandidateAnswerForm
 from questions.models import Question, Candidate, CandidateAnswer
-from django.contrib import messages
 
 
 class QuestionList(ListView):
@@ -74,7 +73,10 @@ class CandidateAnswerQuestion(UserPassesTestMixin, UpdateView):
     form_class = CandidateAnswerForm
 
     def test_func(self):
-        return self.request.user.candidate is not None
+        try:
+            return self.request.user.candidate is not None
+        except Exception:
+            return False
 
     def get_object(self, queryset=None):
         try:
@@ -114,7 +116,10 @@ class AskQuestion(CreateView):
 
 class CandidateRedirect(UserPassesTestMixin, RedirectView):
     def test_func(self):
-        return self.request.user.candidate is not None
+        try:
+            return self.request.user.candidate is not None
+        except Exception:
+            return False
 
     def get_redirect_url(self, *args, **kwargs):
         return reverse("questions:candidate_detail", kwargs={"pk": self.request.user.candidate.pk})
