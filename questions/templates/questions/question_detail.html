@@ -19,7 +19,7 @@
             <p>
                 {% if a %}
                     <small style="color: gray">Ultima actualizare la {{ a.timestamp | date:"d.m.Y H:i" }}</small>
-                    <pre>{{ a.text }}</pre>
+                    <pre class = "w-100">{{ a.text }}</pre>
                     <a class="btn btn-sm btn-outline-secondary" href = "{% url "questions:candidate_detail" pk=c.id %}">Toate răspunsurile candidatului</a>
                 {% else %}
                     <div class="alert alert-danger" role="alert">

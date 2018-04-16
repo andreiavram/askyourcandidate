@@ -31,7 +31,7 @@
         <small style="color: gray">Ultima actualizare la {{ a.timestamp | date:"d.m.Y H:i" }}</small>
         <p>
             {% if a %}
-                <pre>{{ a.text }}</pre>
+                <pre class = "w-100">{{ a.text }}</pre>
             {% else %}
                 <div class="alert alert-danger" role="alert">
                     Candidatul nu a răspuns la această întrebare.
