@@ -17,8 +17,8 @@
 
 {% block content %}
     {% if list_type == 1 %}
-    <p class = "lead">Mai jos sunt întrebările care au fost aprobate și la care candidații pot să răspundă. Orice membru ONCR poate <a href = "{% url "questions:question_ask" %}">adresa</a> o întrebare, atâta vreme cât ea este destinată tuturor candidaților, nu este inclusă într-o altă întrebare deja acceptată, și are relevanță pentru crearea profilului candidatului.</p>
-    <p>Puteți găsi aici și întrebările care <a href = "{% url "questions:index" %}?list_type=0">așteaptă aprobare</a> <span class="badge badge-warning">{{ pending_count }}</span>, și cele care <a href = "{% url "questions:index" %}?list_type=2">au fost respinse</a> <span class="badge badge-danger">{{ rejected_count }}</span>.</p>
+    <p class = "lead">Puteți găsi aici și întrebările care <a href = "{% url "questions:index" %}?list_type=0">așteaptă aprobare</a> <span class="badge badge-warning">{{ pending_count }}</span>, și cele care <a href = "{% url "questions:index" %}?list_type=2">au fost respinse</a> <span class="badge badge-danger">{{ rejected_count }}</span>.</p>
+    <p>Mai jos sunt întrebările care au fost aprobate și la care candidații pot să răspundă. Orice membru ONCR poate <a href = "{% url "questions:question_ask" %}">adresa</a> o întrebare, atâta vreme cât ea este destinată tuturor candidaților, nu este inclusă într-o altă întrebare deja acceptată, și are relevanță pentru crearea profilului candidatului.</p>
     {% else %}
         <p class = "lead">Puteți să vă întoarceți <a href = "{% url "questions:index" %}?list_type=1">aici</a> la lista cu întrebările aprobate.</p>
     {% endif %}
