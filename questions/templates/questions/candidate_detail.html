@@ -25,7 +25,7 @@
             <p>întrebare de la {{ q.owner_name }}, {{ q.owner_affiliation }}</p>
         {% endif %}
 
-        {% if user.is_authenticated and user.candidate %}
+        {% if user.is_authenticated and user.candidate == object %}
             <a class="btn btn-sm btn-outline-secondary" href = "{% url "questions:question_answer" pk=q.id %}">Răspunde / editează răspunsul</a><br>
         {% endif %}
         <small style="color: gray">Ultima actualizare la {{ a.timestamp | date:"d.m.Y H:i" }}</small>
