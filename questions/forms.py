@@ -1,7 +1,10 @@
 from captcha.fields import ReCaptchaField
+from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm, CharField, Textarea
 
 from questions.models import CandidateAnswer, Question
+from utils.oncr_client import ONCRClient
 
 
 class QuestionForm(ModelForm):
@@ -11,6 +14,21 @@ class QuestionForm(ModelForm):
 
     text = CharField(required=True, widget=Textarea, label="Intrebarea")
     captcha = ReCaptchaField()
+
+    def __init__(self, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        self.oncr_data = {}
+
+    def clean_owner_oncr_id(self):
+        client = ONCRClient(user=settings.ONCR_USER, password=settings.ONCR_PASSWORD)
+        client.do_login()
+        try:
+            oncr_data = client.get_membru_json(self.cleaned_data['owner_oncr_id'])
+            self.oncr_data = oncr_data
+        except Exception:
+            raise ValidationError("Nu am gasit un membru cu acest ID")
+
+        return self.cleaned_data['owner_oncr_id']
 
 class CandidateAnswerForm(ModelForm):
     class Meta:
