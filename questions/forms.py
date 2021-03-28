@@ -20,11 +20,26 @@ class QuestionForm(ModelForm):
         self.oncr_data = {}
 
     def clean_owner_oncr_id(self):
-        client = ONCRClient(user=settings.ONCR_USER, password=settings.ONCR_PASSWORD)
-        client.do_login()
+        # client = ONCRClient(user=settings.ONCR_USER, password=settings.ONCR_PASSWORD)
+        # client.do_login()
+        import requests
+        baseURL = 'https://membri.scout.ro'
+        searchURL = '/api/v1/search-user/'
+
+        headers = {"Cookie": settings.ORGO_COOKIE}
         try:
-            oncr_data = client.get_membru_json(self.cleaned_data['owner_oncr_id'])
-            self.oncr_data = oncr_data
+            users = requests.get("{}{}{}".format(baseURL, searchURL, self.cleaned_data["owner_oncr_id"].upper()), headers=headers)
+            detailURL = users.json()[0].get("@id")
+
+            data = requests.get("{}{}".format(baseURL, detailURL), headers=headers)
+            groupURL = data.json().get("localCenter").get("@id")
+
+            group = requests.get("{}{}".format(baseURL, groupURL), headers=headers)
+            self.oncr_data = {
+                "fullName": data.json().get("fullName"),
+                "groupName": " ".join((data.json().get("localCenter").get("name"), group.json().get("town").get("name")))
+            }
+
         except Exception:
             raise ValidationError("Nu am gasit un membru cu acest ID")
 

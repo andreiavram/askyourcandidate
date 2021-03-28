@@ -140,6 +140,8 @@ RECAPTCHA_PUBLIC_KEY = ""
 RECAPTCHA_PRIVATE_KEY = ""
 NOCAPTCHA = True
 
+ORGO_COOKIE = ""
+
 try:
     from local_settings import *
 except ImportError:

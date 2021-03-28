@@ -111,8 +111,8 @@ class AskQuestion(CreateView):
         self.object.approval_status = False
 
         if form.oncr_data:
-            self.object.owner_name = "{} {}".format(form.oncr_data.get("firstName"), form.oncr_data.get("lastName"))
-            self.object.owner_affiliation = form.oncr_data.get("localCenter")
+            self.object.owner_name = form.oncr_data.get("fullName")
+            self.object.owner_affiliation = form.oncr_data.get("groupName")
 
         self.object.save()
         messages.success(self.request, "Intrebarea ta a fost salvata si a mers spre aprobare")
