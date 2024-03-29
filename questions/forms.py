@@ -1,4 +1,4 @@
-from captcha.fields import ReCaptchaField
+from django_recaptcha.fields import ReCaptchaField
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, CharField, Textarea
@@ -26,7 +26,7 @@ class QuestionForm(ModelForm):
         baseURL = 'https://membri.scout.ro'
         searchURL = '/api/v1/search-user/'
 
-        headers = {"Cookie": settings.ORGO_COOKIE}
+        headers = {"API-Token": settings.ORGO_APIKEY}
         try:
             users = requests.get("{}{}{}".format(baseURL, searchURL, self.cleaned_data["owner_oncr_id"].upper()), headers=headers)
             detailURL = users.json()[0].get("@id")

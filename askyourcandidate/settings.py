@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'bootstrap4',
     'django_icons',
-    'captcha',
+    'django_recaptcha',
 
     'questions',
 ]
@@ -140,9 +140,12 @@ RECAPTCHA_PUBLIC_KEY = ""
 RECAPTCHA_PRIVATE_KEY = ""
 NOCAPTCHA = True
 
-ORGO_COOKIE = ""
+ORGO_APIKEY = ""
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
 
 try:
     from local_settings import *
 except ImportError:
     pass
+
