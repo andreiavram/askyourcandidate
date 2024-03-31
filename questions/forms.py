@@ -2,6 +2,7 @@ from django_recaptcha.fields import ReCaptchaField
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm, CharField, Textarea
+from django_recaptcha.widgets import ReCaptchaV3, ReCaptchaV2Checkbox
 
 from questions.models import CandidateAnswer, Question
 from utils.oncr_client import ONCRClient
@@ -13,7 +14,7 @@ class QuestionForm(ModelForm):
         model = Question
 
     text = CharField(required=True, widget=Textarea, label="Intrebarea")
-    captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
     def __init__(self, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)

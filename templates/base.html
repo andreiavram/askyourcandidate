@@ -49,7 +49,7 @@
               {% if request.user.is_authenticated %}
                     <li><a class = "nav-item nav-link" href = "{% url "questions:candidate_redirect" %}">{{ user.candidate.name }}</a></li>
                     <li><a class = "nav-item nav-link" href = "{% url "change_password" %}">Schimbă parola</a></li>
-                    <li><a class = "nav-item nav-link" href = "{% url "logout" %}">Logout</a></li>
+                    <li><a class = "nav-item nav-link" href = "" onclick="do_logout()">Logout</a></li>
 
               {% else %}
                     <li><a class = "nav-item nav-link" href = "{% url "login" %}">Login</a></li>
@@ -79,5 +79,26 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        function getCookie(name) {
+          let cookie = {};
+          document.cookie.split(';').forEach(function(el) {
+            let split = el.split('=');
+            cookie[split[0].trim()] = split.slice(1).join("=");
+          })
+          return cookie[name];
+        }
+
+        async function do_logout() {
+            await fetch("{% url "logout" %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFTOKEN": getCookie("csrftoken")
+                },
+                redirect: 'manual'
+            }).then(data => data.redirected && window.location.assign("https://" + window.location.host + "/"))
+                .catch(err => console.log(err));
+        }
+    </script>
   </body>
 </html>
