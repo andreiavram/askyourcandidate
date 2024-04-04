@@ -18,7 +18,7 @@
     </div>
 
     <ul class = "list-group">
-    {% for q, a in qa.iteritems %}
+    {% for q, a in qa.items %}
         <li class = "list-group-item">
         <h2>{{ q.text }}</h2>
         {% if q.owner_name and q.owner_affiliation %}

@@ -10,10 +10,10 @@
     {% endif %}
 
 <ul class="list-group">
-    {% for c, a in qa.iteritems %}
+    {% for c, a in qa.items %}
         <li class="list-group-item">
             <h2>{{ c.name }}</h2>
-            {% if user.is_authenticated and user.candidate == c %}
+            {% if user.is_authenticated %}
                 <a class="btn btn-sm btn-outline-secondary" href = "{% url "questions:question_answer" pk=object.id %}">Răspunde / editează răspunsul</a><br>
             {% endif %}
             <p>
